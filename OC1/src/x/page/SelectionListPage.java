@@ -1,6 +1,8 @@
 package x.page;
 
 import x.event.Action;
+import x.event.XLiveList;
+import x.pagefactories.ItemToPageLink;
 import x.screen.Screen;
 import x.uiwidget.XPeeredComponent;
 import x.uiwidget.XSearchableList;
@@ -22,6 +24,24 @@ public abstract class SelectionListPage<T>
         super(link);
         this.searchList = searchList;
         addSelectionListener();
+    }
+
+    private SelectionListPage(String title,XSearchableList<T> searchList) {
+        super(title);
+        this.searchList = searchList;
+    }
+
+    public static final SelectionListPage withFixedList(String title,XLiveList list,final ItemToPageLink itemToPageLink) {
+        return new SelectionListPage(title,searchableList(list)) {
+            @Override
+            protected PageLink useSelectedItem(Object item) {
+                return itemToPageLink.pageLink(item);
+            }
+        };
+    }
+
+    private static XSearchableList searchableList(XLiveList list) {
+        return null;
     }
 
     @Override

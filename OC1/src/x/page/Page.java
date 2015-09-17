@@ -22,7 +22,7 @@ public abstract class Page {
         this.title = link.title();
     }
 
-    private Page(String title) {
+    protected Page(String title) {
         this.title = title;
         link = PageLink.of(this, title);
     }
